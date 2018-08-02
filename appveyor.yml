@@ -77,7 +77,7 @@
   build:
     verbosity: minimal
   after_build:
-  - ps: dotnet publish -c Release -r win-x64 -o published
+  - ps: dotnet publish -c Release -r win-x64 -o published --no-build
   artifacts:
   - path: .\src\Yarm.ConsoleApp\published
     name: yarm-$(package_semantic_version)
