@@ -74,10 +74,10 @@
     disable_publish_on_pr: true
   build_script:
   - ps: dotnet restore
-  - ps: dotnet build -c $(configuration) -v minimal
-  - ps: dotnet publish src/Yarm.ConsoleApp -c $(configuration) -r win-x64 -o published -v minimal
+  - ps: dotnet build -c $env:configuration -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -r win-x64 -o published -v minimal
   test_script:
-  - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $(configuration)
+  - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $env:configuration
   artifacts:
   - path: .\src\Yarm.ConsoleApp\published
     name: yarm-$(package_semantic_version)
