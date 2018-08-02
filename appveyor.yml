@@ -1,0 +1,87 @@
+# dev only
+-
+  environment:
+    package_semantic_version: 0.0.1
+    project_name: YARM.CLI
+  version: $(package_semantic_version).{build}
+  branches:
+    only:
+    - dev
+    - master
+  skip_tags: true
+  skip_commits:
+    files:
+      - .editorconfig
+      - .gitattributes
+      - .gitignore
+      - appveyor.yml
+      - LICENSE
+      - README.md
+      - Settings.StyleCop
+      - Yarm.CLI.sln
+      - Yarm.CLI.sln.DotSettings
+      - '**/*.csproj'
+      - samples/
+  image: Visual Studio 2017
+  configuration: Debug
+  platform: Any CPU
+  dotnet_csproj:
+    patch: true
+    file: '**\*.csproj'
+    version: '$(package_semantic_version)'
+    package_version: '$(package_semantic_version)'
+  nuget:
+    disable_publish_on_pr: true
+  before_build:
+  - ps: dotnet restore
+  build:
+    verbosity: minimal
+
+# release/all
+-
+  environment:
+    package_semantic_version: 0.0.1
+    project_name: YARM.CLI
+  version: $(package_semantic_version).{build}
+  pull_requests:
+    do_not_increment_build_number: true
+  branches:
+    only:
+    - release/all
+  skip_tags: true
+#  skip_commits:
+#    files:
+#      - .editorconfig
+#      - .gitattributes
+#      - .gitignore
+#      - appveyor.yml
+#      - LICENSE
+#      - README.md
+#      - Settings.StyleCop
+#      - Yarm.CLI.sln
+#      - Yarm.CLI.sln.DotSettings
+#      - '**/*.csproj'
+#      - samples/
+  image: Visual Studio 2017
+  configuration: Release
+  platform: Any CPU
+  dotnet_csproj:
+    patch: true
+    file: '**\*.csproj'
+    version: '$(package_semantic_version)'
+    package_version: '$(package_semantic_version)'
+  nuget:
+    disable_publish_on_pr: true
+  before_build:
+  - ps: dotnet restore
+  build:
+    verbosity: minimal
+  after_build:
+  - ps: dotnet publish -c $(configuration) -r win-x64 -o published
+  artifacts:
+  - path: .\src\Yarm.ConsoleApp\published
+    name: yarm-$(package_semantic_version)
+    type: zip
+  # deploy:
+  # - provider: Environment
+  #   name: GitHub Release for YARM CLI
