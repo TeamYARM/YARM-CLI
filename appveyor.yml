@@ -2,7 +2,6 @@
 -
   environment:
     package_semantic_version: 0.0.1
-    project_name: YARM.CLI
   version: $(package_semantic_version).{build}
   branches:
     only:
@@ -24,7 +23,6 @@
       - samples/
   image: Visual Studio 2017
   configuration: Debug
-  platform: Any CPU
   dotnet_csproj:
     patch: true
     file: '**\*.csproj'
@@ -32,16 +30,19 @@
     package_version: '$(package_semantic_version)'
   nuget:
     disable_publish_on_pr: true
-  before_build:
+  build_script:
+  - ps: dotnet --version
   - ps: dotnet restore
-  build:
-    verbosity: minimal
+  - ps: dotnet build -c $env:configuration -v minimal
+  test_script:
+  - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $env:configuration
 
 # release/all
 -
   environment:
     package_semantic_version: 0.0.1
-    project_name: YARM.CLI
+    project_name: yarm-cli
+    publish_output: published
   version: $(package_semantic_version).{build}
   pull_requests:
     do_not_increment_build_number: true
@@ -64,7 +65,6 @@
 #      - samples/
   image: Visual Studio 2017
   configuration: Release
-  platform: Any CPU
   dotnet_csproj:
     patch: true
     file: '**\*.csproj'
@@ -72,16 +72,27 @@
     package_version: '$(package_semantic_version)'
   nuget:
     disable_publish_on_pr: true
-  before_build:
+  build_script:
+  - ps: dotnet --version
   - ps: dotnet restore
-  build:
-    verbosity: minimal
-  after_build:
-  - ps: dotnet publish -c $(configuration) -r win-x64 -o published
+  - ps: dotnet build -c $env:configuration -r win-x64 -v minimal
+  - ps: dotnet build -c $env:configuration -r linux-x64 -v minimal
+  - ps: dotnet build -c $env:configuration -r osx-x64 -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/win-x64 -r win-x64 -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/linux-x64 -r linux-x64 -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/osx-x64 -r osx-x64 -v minimal
+  test_script:
+  - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $env:configuration
   artifacts:
-  - path: .\src\Yarm.ConsoleApp\published
-    name: yarm-$(package_semantic_version)
+  - path: .\src\Yarm.ConsoleApp\$(publish_output)\win-x64
+    name: $(project_name)-win-x64-$(package_semantic_version)
     type: zip
-  # deploy:
-  # - provider: Environment
-  #   name: GitHub Release for YARM CLI
+  - path: .\src\Yarm.ConsoleApp\$(publish_output)\linux-x64
+    name: $(project_name)-linux-x64-$(package_semantic_version)
+    type: zip
+  - path: .\src\Yarm.ConsoleApp\$(publish_output)\osx-x64
+    name: $(project_name)-osx-x64-$(package_semantic_version)
+    type: zip
+  deploy:
+  - provider: Environment
+    name: GitHub Release for YARM CLI

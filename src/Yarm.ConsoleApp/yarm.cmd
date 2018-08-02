@@ -1,1 +1,1 @@
-@Yarm.ConsoleApp.exe %1 %2 %3 %4
+@"%~dp0\Yarm.ConsoleApp.exe" %*
