@@ -93,6 +93,6 @@
   - path: .\src\Yarm.ConsoleApp\$(publish_output)\osx-x64
     name: $(project_name)-osx-x64-$(package_semantic_version)
     type: zip
-  # deploy:
-  # - provider: Environment
-  #   name: GitHub Release for YARM CLI
+  deploy:
+  - provider: Environment
+    name: GitHub Release for YARM CLI
