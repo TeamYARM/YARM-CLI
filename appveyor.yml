@@ -23,7 +23,6 @@
       - samples/
   image: Visual Studio 2017
   configuration: Debug
-  platform: Any CPU
   dotnet_csproj:
     patch: true
     file: '**\*.csproj'
@@ -66,7 +65,6 @@
 #      - samples/
   image: Visual Studio 2017
   configuration: Release
-  platform: Any CPU
   dotnet_csproj:
     patch: true
     file: '**\*.csproj'
