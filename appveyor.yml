@@ -32,6 +32,7 @@
   nuget:
     disable_publish_on_pr: true
   build_script:
+  - ps: dotnet --version
   - ps: dotnet restore
   - ps: dotnet build -c $env:configuration -v minimal
   test_script:
@@ -74,6 +75,7 @@
   nuget:
     disable_publish_on_pr: true
   build_script:
+  - ps: dotnet --version
   - ps: dotnet restore
   - ps: dotnet build -c $env:configuration -r win-x64 -v minimal
   - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -r win-x64 -o $env:publish_output -v minimal
