@@ -77,8 +77,8 @@
   build_script:
   - ps: dotnet --version
   - ps: dotnet restore
-  - ps: dotnet build -c $env:configuration -r win-x64 -v minimal
-  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -r win-x64 -o $env:publish_output -v minimal
+  - ps: dotnet build -c $env:configuration -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output -v minimal
   test_script:
   - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $env:configuration
   artifacts:
