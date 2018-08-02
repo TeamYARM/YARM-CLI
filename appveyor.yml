@@ -72,12 +72,12 @@
     package_version: '$(package_semantic_version)'
   nuget:
     disable_publish_on_pr: true
-  before_build:
+  build_script:
   - ps: dotnet restore
-  build:
-    verbosity: minimal
-  after_build:
-  - ps: dotnet publish src\Yarm.ConsoleApp -c Release -r win-x64 -o published
+  - ps: dotnet build -c $(configuration) -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $(configuration) -r win-x64 -o published -v minimal
+  test_script:
+  - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $(configuration)
   artifacts:
   - path: .\src\Yarm.ConsoleApp\published
     name: yarm-$(package_semantic_version)
