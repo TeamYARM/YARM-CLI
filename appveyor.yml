@@ -84,8 +84,14 @@
   test_script:
   - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $env:configuration
   artifacts:
-  - path: .\src\Yarm.ConsoleApp\$(publish_output)
-    name: $(project_name)-$(package_semantic_version)
+  - path: .\src\Yarm.ConsoleApp\$(publish_output)\win-x64
+    name: $(project_name)-win-x64-$(package_semantic_version)
+    type: zip
+  - path: .\src\Yarm.ConsoleApp\$(publish_output)\linux-x64
+    name: $(project_name)-linux-x64-$(package_semantic_version)
+    type: zip
+  - path: .\src\Yarm.ConsoleApp\$(publish_output)\osx-x64
+    name: $(project_name)-osx-x64-$(package_semantic_version)
     type: zip
   # deploy:
   # - provider: Environment
