@@ -75,12 +75,16 @@
   build_script:
   - ps: dotnet --version
   - ps: dotnet restore
-  - ps: dotnet build -c $env:configuration -v minimal
-  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output -v minimal
+  - ps: dotnet build -c $env:configuration -r win-x64 -v minimal
+  - ps: dotnet build -c $env:configuration -r linux-x64 -v minimal
+  - ps: dotnet build -c $env:configuration -r osx-x64 -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/win-x64 -r win-x64 -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/linux-x64 -r linux-x64 -v minimal
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/osx-x64 -r osx-x64 -v minimal
   test_script:
   - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $env:configuration
   artifacts:
-  - path: $(publish_output)
+  - path: .\src\Yarm.ConsoleApp\$(publish_output)
     name: $(project_name)-$(package_semantic_version)
     type: zip
   # deploy:
