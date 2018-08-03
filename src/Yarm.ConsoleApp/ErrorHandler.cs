@@ -7,12 +7,9 @@ namespace Yarm.ConsoleApp
     /// <summary>
     /// This represents the error handler entity.
     /// </summary>
-    public class ErrorHandler
+    public class ErrorHandler : IErrorHandler
     {
-        /// <summary>
-        /// Processes the list of errors raised.
-        /// </summary>
-        /// <param name="errors">List of <see cref="Error"/> instances.</param>
+        /// <inheritdoc />
         public void Process(IEnumerable<Error> errors)
         {
         }
