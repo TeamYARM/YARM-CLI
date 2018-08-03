@@ -15,7 +15,20 @@ namespace Yarm.ConsoleApp.Tests
     public class ConverterTests
     {
         [TestMethod]
-        public async Task Given_NullOptions_ParseAsync_ShouldThrow_Exception()
+        public void Given_ClassType_Should_ImplementInterface()
+        {
+            typeof(Converter).Should().Implement<IConverter>();
+        }
+
+        [TestMethod]
+        public void Given_ClassType_Should_HaveMethod()
+        {
+            typeof(Converter).Should().HaveMethod("ParseAsync", new[] { typeof(Options), typeof(HttpClient) })
+                                      .Subject.ReturnType.Should().Be<Task>();
+        }
+
+        [TestMethod]
+        public void Given_NullOptions_ParseAsync_ShouldThrow_Exception()
         {
             var converter = new Converter();
 
@@ -25,7 +38,7 @@ namespace Yarm.ConsoleApp.Tests
         }
 
         [TestMethod]
-        public async Task Given_NullHttpClient_ParseAsync_ShouldThrow_Exception()
+        public void Given_NullHttpClient_ParseAsync_ShouldThrow_Exception()
         {
             var converter = new Converter();
 
@@ -35,7 +48,7 @@ namespace Yarm.ConsoleApp.Tests
         }
 
         [TestMethod]
-        public async Task Given_NullInputPath_ParseAsync_ShouldThrow_Exception()
+        public void Given_NullInputPath_ParseAsync_ShouldThrow_Exception()
         {
             var converter = new Converter();
 

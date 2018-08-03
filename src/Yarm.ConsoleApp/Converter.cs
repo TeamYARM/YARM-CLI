@@ -12,12 +12,9 @@ namespace Yarm.ConsoleApp
     /// <summary>
     /// This represents the converter entity.
     /// </summary>
-    public class Converter
+    public class Converter : IConverter
     {
-        /// <summary>
-        /// Parses the input to output.
-        /// </summary>
-        /// <param name="options"><see cref="Options"/> instance.</param>
+        /// <inheritdoc />
         public async Task ParseAsync(Options options, HttpClient client)
         {
             if (options == null)
