@@ -3,6 +3,11 @@
 **YARM CLI** is a console application to help [ARM](https://docs.microsoft.com/en-us/azure/azure-resource-manager/) template authoring in [YAML](http://yaml.org/). Even though ARM templates officially only support JSON format, YAML as a superset of JSON is much better for writing ARM templates that have complex structure.
 
 
+## Download YARM CLI ##
+
+You can download YARM CLI at the [release](https://github.com/TeamYARM/YARM-CLI/releases) page.
+
+
 ## Getting Started ##
 
 With **YARM CLI**, you can easily convert your YAML documents to JSON and/or vice versa.
@@ -41,6 +46,49 @@ If no output name is specified, it stores the same location of the input file wi
 
 ```commmand
 yarm -i https://raw.githubusercontent.com/TeamYARM/YARM-CLI/master/samples/azuredeploy.json
+```
+
+
+## Integrating CI Pipeline ##
+
+**YARM CLI** works really well with any continuous integration (CI) pipeline.
+
+
+### Install the Latest Release ##
+
+If you want to integrate **YARM CLI** with your preferred CI pipeline, you can use this PowerShell script block to download and install.
+
+```powershell
+# Download the PowerShell script from GitHub
+$script = Invoke-WebRequest https://raw.githubusercontent.com/TeamYARM/YARM-CLI/master/Download-Latest.ps1
+
+# Create argument list
+# - RUNTIME: Runtime environment for YARM CLI. Possible values are win-x64, linux-x64, osx-x64. Default is win-x64.
+# - RUNPATH: Location where YARM CLI is downloaded and installed. Default is the current location where the script is running.
+$argList = "[RUNTIME]", "[RUNPATH]"
+
+# Run the script
+Invoke-Command -ScriptBlock ([scriptblock]::Create($script.Content)) -ArgumentList $argList
+```
+
+
+### Convert Multiple Files ###
+
+There are chances you have multiple JSON or YAML files to deal with. You can use this PowerShell script block for it.
+
+```powershell
+$directory = "[ARM_TEMPLATE_DIRECTORY]"
+$yarmdir = "[YARM_CLI_DIRECTORY]"
+$targetdir = "[TARGET_DIRECTORY]"
+
+# #1. Convert ARM templates written in YAML to JSON
+Get-ChildItem -Path $directory -Recurse | `
+    Where-Object { $_.Name -like "*.yaml" } | `
+    ForEach { $yarmdir\yarm.cmd -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json") }
+
+# #2. Convert ARM templates written in YAML to JSON
+Get-ChildItem -Path $directory -Recurse -Include *.yaml | `
+    ForEach { $yarmdir\yarm.cmd -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json") }
 ```
 
 
