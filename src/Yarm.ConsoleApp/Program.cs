@@ -10,8 +10,8 @@ namespace Yarm.ConsoleApp
     public static class Program
     {
         private static HttpClient _client = new HttpClient();
-        private static Converter _converter = new Converter();
-        private static ErrorHandler _handler = new ErrorHandler();
+        private static IConverter _converter = new Converter();
+        private static IErrorHandler _handler = new ErrorHandler();
 
         /// <summary>
         /// Invokes the console application.
