@@ -1,4 +1,4 @@
-# YARM CLI #
+# YARM CLI [![GitHub release](https://img.shields.io/github/release/TeamYARM/YARM-CLI.svg)](https://github.com/TeamYARM/YARM-CLI/releases) [![](https://img.shields.io/github/downloads/TeamYARM/YARM-CLI/latest/total.svg)](https://github.com/TeamYARM/YARM-CLI/releases) #
 
 **YARM CLI** is a console application to help [ARM](https://docs.microsoft.com/en-us/azure/azure-resource-manager/) template authoring in [YAML](http://yaml.org/). Even though ARM templates officially only support JSON format, YAML as a superset of JSON is much better for writing ARM templates that have complex structure.
 
