@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
+    <PackageReference Include="ILLink.Tasks" Version="0.1.4-preview-981901" />
     <PackageReference Include="Yarm.Converters" Version="0.1.0" />
   </ItemGroup>
 
