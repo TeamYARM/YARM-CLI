@@ -35,7 +35,9 @@ namespace Yarm.ConsoleApp
                 var yaml = await ReadFileAsync(options.InputPath, client).ConfigureAwait(false);
                 var json = yaml.ToJson();
 
-                File.WriteAllText(options.OuptputPath, json);
+                await File.WriteAllTextAsync(options.OuptputPath, json).ConfigureAwait(false);
+
+                Console.WriteLine($"{options.InputPath} => {options.OuptputPath}");
 
                 return;
             }
@@ -45,7 +47,9 @@ namespace Yarm.ConsoleApp
                 var json = await ReadFileAsync(options.InputPath, client).ConfigureAwait(false);
                 var yaml = json.ToYaml();
 
-                File.WriteAllText(options.OuptputPath, yaml);
+                await File.WriteAllTextAsync(options.OuptputPath, yaml).ConfigureAwait(false);
+
+                Console.WriteLine($"{options.InputPath} => {options.OuptputPath}");
 
                 return;
             }
