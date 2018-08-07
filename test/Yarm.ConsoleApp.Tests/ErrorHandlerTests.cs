@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using CommandLine;
 
@@ -23,7 +24,8 @@ namespace Yarm.ConsoleApp.Tests
         [TestMethod]
         public void Given_ClassType_Should_HaveMethod()
         {
-            typeof(ErrorHandler).Should().HaveMethod("Process", new[] { typeof(IEnumerable<Error>) });
+            typeof(ErrorHandler).Should().HaveMethod("ProcessAsync", new[] { typeof(IEnumerable<Error>), typeof(ParserResult<Options>) })
+                                         .Subject.ReturnType.Should().Be<Task>();
         }
     }
 }
