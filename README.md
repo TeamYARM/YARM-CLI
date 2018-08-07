@@ -78,17 +78,19 @@ There are chances you have multiple JSON or YAML files to deal with. You can use
 
 ```powershell
 $directory = "[ARM_TEMPLATE_DIRECTORY]"
-$yarmdir = "[YARM_CLI_DIRECTORY]\yarm.cmd"
+$yarmpath = "[YARM_CLI_DIRECTORY]\yarm.cmd"
 $targetdir = "[TARGET_DIRECTORY]"
+
+& $yarmpath --version
 
 # #1. Convert ARM templates written in YAML to JSON
 Get-ChildItem -Path $directory -Recurse | `
     Where-Object { $_.Name -like "*.yaml" } | `
-    ForEach { $yarmdir\yarm.cmd -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json") }
+    ForEach { & $yarmpath -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json") }
 
 # #2. Convert ARM templates written in YAML to JSON
 Get-ChildItem -Path $directory -Recurse -Include *.yaml | `
-    ForEach { & $yarmdir -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json") }
+    ForEach { & $yarmpath -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json") }
 ```
 
 
