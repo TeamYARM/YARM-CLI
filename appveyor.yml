@@ -78,9 +78,9 @@
   - ps: dotnet build -c $env:configuration -r win-x64 -v minimal
   - ps: dotnet build -c $env:configuration -r linux-x64 -v minimal
   - ps: dotnet build -c $env:configuration -r osx-x64 -v minimal
-  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/win-x64 -r win-x64 -v minimal /p:ShowLinkerSizeComparison=true
-  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/linux-x64 -r linux-x64 -v minimal /p:ShowLinkerSizeComparison=true
-  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/osx-x64 -r osx-x64 -v minimal /p:ShowLinkerSizeComparison=true
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/win-x64 -r win-x64 -v minimal /p:LinkDuringPublish=false
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/linux-x64 -r linux-x64 -v minimal /p:LinkDuringPublish=false
+  - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/osx-x64 -r osx-x64 -v minimal /p:LinkDuringPublish=false
   test_script:
   - ps: dotnet test test/Yarm.ConsoleApp.Tests -c $env:configuration
   artifacts:
