@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 
 using CommandLine;
 
@@ -19,10 +20,10 @@ namespace Yarm.ConsoleApp
         /// <param name="args">List of arguments.</param>
         public static void Main(string[] args)
         {
-            var parser = new Parser(with => with.EnableDashDash = true);
-            var result = parser.ParseArguments<Options>(args)
-                               .WithParsed<Options>(options => _converter.ParseAsync(options, _client).Wait())
-                               .WithNotParsed<Options>(errors => _handler.Process(errors));
+            var parser = new Parser(with => { with.EnableDashDash = true; with.HelpWriter = Console.Out; });
+            var result = parser.ParseArguments<Options>(args);
+            result.WithParsed<Options>(options => _converter.ParseAsync(options, _client).Wait())
+                  .WithNotParsed<Options>(errors => _handler.ProcessAsync(errors, result).Wait());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using CommandLine;
 
@@ -10,8 +11,9 @@ namespace Yarm.ConsoleApp
     public class ErrorHandler : IErrorHandler
     {
         /// <inheritdoc />
-        public void Process(IEnumerable<Error> errors)
+        public async Task ProcessAsync(IEnumerable<Error> errors, ParserResult<Options> result)
         {
+            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }

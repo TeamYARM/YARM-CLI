@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
 
 using Yarm.Converters;
@@ -35,7 +34,9 @@ namespace Yarm.ConsoleApp
                 var yaml = await ReadFileAsync(options.InputPath, client).ConfigureAwait(false);
                 var json = yaml.ToJson();
 
-                File.WriteAllText(options.OuptputPath, json);
+                await File.WriteAllTextAsync(options.OuptputPath, json).ConfigureAwait(false);
+
+                Console.WriteLine($"{options.InputPath} => {options.OuptputPath}");
 
                 return;
             }
@@ -45,7 +46,9 @@ namespace Yarm.ConsoleApp
                 var json = await ReadFileAsync(options.InputPath, client).ConfigureAwait(false);
                 var yaml = json.ToYaml();
 
-                File.WriteAllText(options.OuptputPath, yaml);
+                await File.WriteAllTextAsync(options.OuptputPath, yaml).ConfigureAwait(false);
+
+                Console.WriteLine($"{options.InputPath} => {options.OuptputPath}");
 
                 return;
             }
@@ -129,7 +132,7 @@ namespace Yarm.ConsoleApp
             if (vr.IsInputHttp)
             {
                 var inputFilename = options.InputPath.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries).Last();
-                options.OuptputPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}{inputFilename}";
+                options.OuptputPath = $"{Environment.CurrentDirectory.TrimEnd(Path.DirectorySeparatorChar)}{Path.DirectorySeparatorChar}{inputFilename}";
             }
             else
             {
