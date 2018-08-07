@@ -133,7 +133,7 @@ namespace Yarm.ConsoleApp
             if (vr.IsInputHttp)
             {
                 var inputFilename = options.InputPath.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries).Last();
-                options.OuptputPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}{inputFilename}";
+                options.OuptputPath = $"{Environment.CurrentDirectory.TrimEnd(Path.DirectorySeparatorChar)}{Path.DirectorySeparatorChar}{inputFilename}";
             }
             else
             {
