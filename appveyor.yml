@@ -1,7 +1,7 @@
 # dev only
 -
   environment:
-    package_semantic_version: 0.0.1
+    package_semantic_version: 0.2.0
   version: $(package_semantic_version).{build}
   branches:
     only:
@@ -40,7 +40,7 @@
 # release/all
 -
   environment:
-    package_semantic_version: 0.0.1
+    package_semantic_version: 0.2.0
     project_name: yarm-cli
     publish_output: published
   version: $(package_semantic_version).{build}
