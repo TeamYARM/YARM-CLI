@@ -86,11 +86,15 @@ $targetdir = "[TARGET_DIRECTORY]"
 # #1. Convert ARM templates written in YAML to JSON
 Get-ChildItem -Path $directory -Recurse | `
     Where-Object { $_.Name -like "*.yaml" } | `
-    ForEach { & $yarmpath -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json") }
+    ForEach {
+        & $yarmpath -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json")
+    }
 
 # #2. Convert ARM templates written in YAML to JSON
 Get-ChildItem -Path $directory -Recurse -Include *.yaml | `
-    ForEach { & $yarmpath -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json") }
+    ForEach {
+        & $yarmpath -i $_.FullName -o "$targetdir\$($_.Name)".Replace(".yaml", ".json")
+    }
 ```
 
 
