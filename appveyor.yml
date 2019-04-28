@@ -74,11 +74,13 @@
     disable_publish_on_pr: true
   build_script:
   - ps: dotnet --version
-  - ps: dotnet restore
+  - ps: dotnet restore -r win-x64
   - ps: dotnet build -c $env:configuration -r win-x64 -v minimal
   - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/win-x64 -r win-x64 -v minimal /p:LinkDuringPublish=true
+  - ps: dotnet restore -r wilinuxn-x64
   - ps: dotnet build -c $env:configuration -r linux-x64 -v minimal
   - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/linux-x64 -r linux-x64 -v minimal /p:LinkDuringPublish=true
+  - ps: dotnet restore -r osx-x64
   - ps: dotnet build -c $env:configuration -r osx-x64 -v minimal
   - ps: dotnet publish src/Yarm.ConsoleApp -c $env:configuration -o $env:publish_output/osx-x64 -r osx-x64 -v minimal /p:LinkDuringPublish=true
   test_script:
