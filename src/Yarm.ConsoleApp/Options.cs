@@ -10,13 +10,13 @@ namespace Yarm.ConsoleApp
         /// <summary>
         /// Gets or sets the input file path.
         /// </summary>
-        [Option('i', "input", Required = false, HelpText = "Input file name and path. If path is omitted, it assumes the current directory.")]
+        [Option('i', "input", Required = true, HelpText = "Name or absolute path of source file.")]
         public string InputPath { get; set; }
 
         /// <summary>
         /// Gets or sets the output file path.
         /// </summary>
-        [Option('o', "output", Required = false, HelpText = "Output file name and path. If path is omitted, it assumes the current directory.")]
+        [Option('o', "output", Required = false, HelpText = "Name or absolute path or output file. If omitted, assumes current directory and same filename with target extension.")]
         public string OuptputPath { get; set; }
     }
 }
